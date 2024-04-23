@@ -1,0 +1,355 @@
+[
+    {
+        "id": "fac157c37af7bbd8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "c0f8dbcec4fa743c",
+        "type": "http in",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "url": "/",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 70,
+        "y": 140,
+        "wires": [
+            [
+                "f9ac77f405ccff14"
+            ]
+        ]
+    },
+    {
+        "id": "53cefd3777c347a9",
+        "type": "http response",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 570,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "5ad8746e14e3ccd1",
+        "type": "template",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"tr\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, inital-scale=1.0\">\n    <title>Todo Web Application</title>\n    <link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\">\n</head>\n\n<body>\n    <div class=\"container mt-5\">\n        <div class=\"row\">\n            <div class=\"col-md-8 offset-md-2\">\n                {{#error}}\n                <div class=\"alert alert-danger\">\n                    <h4>{{message}}</h4>\n                </div>\n                {{/error}}\n                <form action=\"/add\" method=\"POST\">\n                    <div class=\"input-group input-group-lg\">\n                        <input type=\"text\" name=\"name\" class=\"form-control {{#error}}border-danger{{/error}}\" placeholder=\"Please enter the task you want to add to the list...\">\n                        <button class=\"btn btn-outline-secondary\" type=\"reset\">Clear</button>\n                        <button class=\"btn btn-primary px-5\" type=\"submit\">Add</button>\n                    </div>\n                </form>\n                <div class=\"card mt-2 overflow-hidden\">\n                    <div class=\"card-body p-0\">\n                        <div class=\"table-responsive\">\n                            <table class=\"table table-hover m-0\">\n                                <thead class=\"table-dark\">\n                                    <tr>\n                                        <th colspan=\"2\">Job</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    {{#payload}}\n                                    <tr>\n                                        <td>{{name}}</td>\n                                        <td align=\"right\">\n                                            <div class=\"btn-grop\">\n                                                <form method=\"POST\">\n                                                        <input type=\"hidden\" name=\"id\" value=\"{{id}}\"/>\n                                                    {{#done}}\n                                                        <button type=\"submit\" class=\"btn btn-warning\">Open Task</button>\n                                                    {{/done}}\n                                                    {{^done}}\n                                                        <button type=\"submit\" class=\"btn btn-info\">Edit Task</button>\n                                                        <button type=\"submit\" class=\"btn btn-secondary\">Reminder</button>\n                                                        <button type=\"submit\" class=\"btn btn-success\">Complete Task</button>\n                                                    {{/done}}\n                                                    <button type=\"submit\" formaction=\"/trash\" class=\"btn btn-danger\">Delete Task</button>\n                                                </form>\n                                            </div>\n                                        </td>\n                                    </tr>\n                                    {{/payload}}\n                                    {{^payload}}\n                                    <tr>\n                                        <td colspan=\"2\" class=\"text-muted text-center\">No job entries yet...</td>\n                                    </tr>\n                                    {{/payload}}\n                                </tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <script src=\"/js/bootstrap.bundle.min.js\"></script>\n</body>\n\n</html>",
+        "output": "str",
+        "x": 420,
+        "y": 140,
+        "wires": [
+            [
+                "53cefd3777c347a9"
+            ]
+        ]
+    },
+    {
+        "id": "41b2647287263be8",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "DB",
+        "func": "// Flush DB\nglobal.set(\"DB\", {\n    todo: []\n})",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n\nconst DB = global.get(\"DB\") || {\n    todo: []\n}\n\n/*\n * TODO DB Schema\n * id: NOW\n * name: \" \"\n * done: True|False\n * stamp: {\n *  createdAt: NOW\n *  ip: IP\n *  username: \" \"\n *  email: \" \"\n * } \n**/\n\nglobal.set(\"DB\", DB)",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "38b4530ca199e817",
+        "type": "inject",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 40,
+        "wires": [
+            [
+                "41b2647287263be8"
+            ]
+        ]
+    },
+    {
+        "id": "f9ac77f405ccff14",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "db.todo.find()",
+        "func": "const DB = global.get(\"DB\")\n\nmsg.payload=DB.todo\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 140,
+        "wires": [
+            [
+                "5ad8746e14e3ccd1"
+            ]
+        ]
+    },
+    {
+        "id": "9968a559b69bbec1",
+        "type": "http in",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "url": "/add",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 80,
+        "y": 200,
+        "wires": [
+            [
+                "ed5c6c0003c258cf"
+            ]
+        ]
+    },
+    {
+        "id": "c62bf2d5dc1eb90b",
+        "type": "http response",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "statusCode": "302",
+        "headers": {
+            "location": "/"
+        },
+        "x": 600,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "56c7a8a175156a01",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "db.todo.insert()",
+        "func": "const DB = global.get(\"DB\")\n\nlet todo = DB.todo\n\nconst now = new Date().getTime()\ntodo.push({\n    id: now,\n    name: msg.payload.name,\n    done: false,\n    stamp: {\n        createdAt: now,\n        ip: msg.req.ip,\n        username: \"\",\n        email: \"\"\n    }\n})\n\nDB.todo = todo\n\nglobal.set(\"DB\", DB)\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 420,
+        "y": 200,
+        "wires": [
+            [
+                "c62bf2d5dc1eb90b"
+            ]
+        ]
+    },
+    {
+        "id": "ed5c6c0003c258cf",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "validation",
+        "func": "if (!msg.payload.name) {\n    node.error(\"Job information cannot be left blank\", msg);\n    return\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 240,
+        "y": 200,
+        "wires": [
+            [
+                "56c7a8a175156a01"
+            ]
+        ]
+    },
+    {
+        "id": "0ce6eb4db1883202",
+        "type": "catch",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "scope": [
+            "ed5c6c0003c258cf"
+        ],
+        "uncaught": false,
+        "x": 230,
+        "y": 240,
+        "wires": [
+            [
+                "98113fb783477472"
+            ]
+        ]
+    },
+    {
+        "id": "802c3e2c251b7b7b",
+        "type": "link in",
+        "z": "fac157c37af7bbd8",
+        "name": "link in 1",
+        "links": [
+            "98113fb783477472",
+            "d15c817ea51a7cc3",
+            "d88ad555a34772f0"
+        ],
+        "x": 55,
+        "y": 100,
+        "wires": [
+            [
+                "f9ac77f405ccff14"
+            ]
+        ]
+    },
+    {
+        "id": "98113fb783477472",
+        "type": "link out",
+        "z": "fac157c37af7bbd8",
+        "name": "link out 1",
+        "mode": "link",
+        "links": [
+            "802c3e2c251b7b7b",
+            "78f547b172238567"
+        ],
+        "x": 335,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "71a144c874b45e6f",
+        "type": "http in",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "url": "/trash",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 90,
+        "y": 320,
+        "wires": [
+            [
+                "9e67c874d0604878"
+            ]
+        ]
+    },
+    {
+        "id": "ea235cf525d30bfb",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "db.todo.delete()",
+        "func": "const DB = global.get(\"DB\")\n\nlet todo = DB.todo\n\nconst index = todo.findIndex(x => x.id == msg.payload.id)\n\nif (!~index) {\n    msg.error = {\n        message : \"No record found matching id ...\"\n    }\n    return [null, msg]\n}\n\ntodo.splice(index, 1)\n\nDB.todo = todo\n\nglobal.set(\"DB\", DB)\n\nreturn msg;",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 300,
+        "wires": [
+            [
+                "2e2ff0fdb5908073"
+            ],
+            [
+                "d88ad555a34772f0"
+            ]
+        ],
+        "outputLabels": [
+            "Succ",
+            "Err"
+        ]
+    },
+    {
+        "id": "9e67c874d0604878",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "validation",
+        "func": "if (!msg.payload.id) {\n    msg.error = {\n        message: \"The element you want to delete must have ID information...\"\n    }\n    return [null, msg]\n}\n\nreturn msg;",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 320,
+        "wires": [
+            [
+                "ea235cf525d30bfb"
+            ],
+            [
+                "d15c817ea51a7cc3"
+            ]
+        ],
+        "outputLabels": [
+            "Valid",
+            "Invalid"
+        ]
+    },
+    {
+        "id": "2e2ff0fdb5908073",
+        "type": "http response",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "statusCode": "302",
+        "headers": {
+            "location": "/"
+        },
+        "x": 620,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "d15c817ea51a7cc3",
+        "type": "link out",
+        "z": "fac157c37af7bbd8",
+        "name": "link out 2",
+        "mode": "link",
+        "links": [
+            "802c3e2c251b7b7b",
+            "78f547b172238567"
+        ],
+        "x": 375,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "d88ad555a34772f0",
+        "type": "link out",
+        "z": "fac157c37af7bbd8",
+        "name": "link out 3",
+        "mode": "link",
+        "links": [
+            "802c3e2c251b7b7b",
+            "78f547b172238567"
+        ],
+        "x": 575,
+        "y": 320,
+        "wires": []
+    }
+]
