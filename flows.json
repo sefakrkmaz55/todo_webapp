@@ -44,7 +44,7 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "<!DOCTYPE html>\n<html lang=\"tr\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, inital-scale=1.0\">\n    <title>Todo Web Application</title>\n    <link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\">\n</head>\n\n<body>\n    <div class=\"container mt-5\">\n        <div class=\"row\">\n            <div class=\"col-md-8 offset-md-2\">\n                {{#error}}\n                <div class=\"alert alert-danger\">\n                    <h4>{{message}}</h4>\n                </div>\n                {{/error}}\n                <form action=\"/add\" method=\"POST\">\n                    <div class=\"input-group input-group-lg\">\n                        <input type=\"text\" name=\"name\" class=\"form-control {{#error}}border-danger{{/error}}\" placeholder=\"Please enter the task you want to add to the list...\">\n                        <button class=\"btn btn-outline-secondary\" type=\"reset\">Clear</button>\n                        <button class=\"btn btn-primary px-5\" type=\"submit\">Add</button>\n                    </div>\n                </form>\n                <div class=\"card mt-2 overflow-hidden\">\n                    <div class=\"card-body p-0\">\n                        <div class=\"table-responsive\">\n                            <table class=\"table table-hover m-0\">\n                                <thead class=\"table-dark\">\n                                    <tr>\n                                        <th colspan=\"2\">Job</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    {{#payload}}\n                                    <tr>\n                                        <td>{{name}}</td>\n                                        <td align=\"right\">\n                                            <div class=\"btn-grop\">\n                                                <form method=\"POST\">\n                                                        <input type=\"hidden\" name=\"id\" value=\"{{id}}\"/>\n                                                    {{#done}}\n                                                        <button type=\"submit\" class=\"btn btn-warning\">Open Task</button>\n                                                    {{/done}}\n                                                    {{^done}}\n                                                        <button type=\"submit\" class=\"btn btn-info\">Edit Task</button>\n                                                        <button type=\"submit\" class=\"btn btn-secondary\">Reminder</button>\n                                                        <button type=\"submit\" class=\"btn btn-success\">Complete Task</button>\n                                                    {{/done}}\n                                                    <button type=\"submit\" formaction=\"/trash\" class=\"btn btn-danger\">Delete Task</button>\n                                                </form>\n                                            </div>\n                                        </td>\n                                    </tr>\n                                    {{/payload}}\n                                    {{^payload}}\n                                    <tr>\n                                        <td colspan=\"2\" class=\"text-muted text-center\">No job entries yet...</td>\n                                    </tr>\n                                    {{/payload}}\n                                </tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <script src=\"/js/bootstrap.bundle.min.js\"></script>\n</body>\n\n</html>",
+        "template": "<!DOCTYPE html>\n<html lang=\"tr\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, inital-scale=1.0\">\n    <title>Todo Web Application</title>\n    <link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\">\n    <link rel=\"stylesheet\" href=\"/font/bootstrap-icons.min.css\">\n</head>\n\n<body>\n    <div class=\"container mt-5\">\n        <div class=\"row\">\n            <div class=\"col-md-8 offset-md-2\">\n                {{#error}}\n                <div class=\"alert alert-danger\">\n                    <h4>{{message}}</h4>\n                </div>\n                {{/error}}\n                <form action=\"/opt/add\" method=\"POST\">\n                    <div class=\"input-group input-group-lg\">\n                        <input required type=\"text\" name=\"name\" class=\"form-control {{#error}}border-danger{{/error}}\" placeholder=\"Please enter the task you want to add to the list...\">\n                        <button class=\"btn btn-outline-secondary\" type=\"reset\">Clear</button>\n                        <button class=\"btn btn-primary px-5\" type=\"submit\">Add</button>\n                    </div>\n                </form>\n                <div class=\"card mt-2 overflow-hidden\">\n                    <div class=\"card-body p-0\">\n                        <div class=\"table-responsive\">\n                            <table class=\"table table-hover m-0\">\n                                <thead class=\"table-dark\">\n                                    <tr>\n                                        <th colspan=\"2\">Job</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    {{#payload}}\n                                    <tr valign=\"middle\">\n                                        <td>\n                                            {{#done}}\n                                            <h4 class=\"text-muted\"><del>{{name}}</del></h4>\n                                            {{/done}}\n                                            {{^done}}\n                                            <h4>{{name}}</h4>\n                                            {{/done}}\n                                            <div class=\"badge bg-secondary\">\n                                                <small><i class=\"bi bi-calendar\"></i> {{date}} {{time}}</small>\n                                            </div>\n                                        </td>\n                                        <td align=\"right\">\n                                            <div class=\"btn-grop\">\n                                                <form method=\"POST\">\n                                                    <input type=\"hidden\" name=\"id\" value=\"{{id}}\"/>\n                                                    {{#done}}\n                                                    <button data-bs-toggle=\"tooltip\" data-bs-title=\"Open Task\" type=\"submit\" formaction=\"/opt/open\" class=\"btn btn-warning\"><i class=\"bi bi-arrow-clockwise\"></i></button>\n                                                    {{/done}}\n                                                    {{^done}}\n                                                    <a data-bs-toggle=\"tooltip\" href=\"/edit/{{id}}\"  data-bs-title=\"Edit Task\" class=\"btn btn-info\"><i class=\"bi bi-pencil-fill\"></i></a>\n                                                    <button data-bs-toggle=\"tooltip\" data-bs-title=\"Reminder Task\" type=\"submit\" class=\"btn btn-secondary\"><i class=\"bi bi-bell-fill\"></i></button>\n                                                    <button data-bs-toggle=\"tooltip\" data-bs-title=\"Complete Task\" type=\"submit\" formaction=\"/opt/complete\" class=\"btn btn-success\"><i class=\"bi bi-check-lg\"></i></button>\n                                                    {{/done}}\n                                                    <button data-bs-toggle=\"tooltip\" data-bs-title=\"Delete Task\" type=\"submit\" formaction=\"/opt/trash\" class=\"btn btn-danger\"><i class=\"bi bi-trash2-fill\"></i></button>\n                                                </form>\n                                            </div>\n                                        </td>\n                                    </tr>\n                                    {{/payload}}\n                                    {{^payload}}\n                                    <tr>\n                                        <td colspan=\"2\" class=\"text-muted text-center\">No job entries yet...</td>\n                                    </tr>\n                                    {{/payload}}\n                                </tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <script src=\"/js/bootstrap.bundle.min.js\"></script>\n    <script>\n        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\"tooltip\"]')\n        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))\n    </script>\n</body>\n\n</html>",
         "output": "str",
         "x": 420,
         "y": 140,
@@ -63,7 +63,7 @@
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "// Code added here will be run once\n// whenever the node is started.\n\nconst DB = global.get(\"DB\") || {\n    todo: []\n}\n\n/*\n * TODO DB Schema\n * id: NOW\n * name: \" \"\n * done: True|False\n * stamp: {\n *  createdAt: NOW\n *  ip: IP\n *  username: \" \"\n *  email: \" \"\n * } \n**/\n\nglobal.set(\"DB\", DB)",
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n\nconst DB = global.get(\"DB\") || {\n    todo: []\n}\n\n/*\n * TODO DB Schema\n * id: NOW\n * name: \" \"\n * done: True|False\n * stamp: {\n *  createdAt: NOW\n *  ip: IP\n *  username: \" \"\n *  email: \" \"\n *  date: \"DD.MM.YYYY\"\n *  time: \"HH:MM\"\n * } \n**/\n\nglobal.set(\"DB\", DB)",
         "finalize": "",
         "libs": [],
         "x": 250,
@@ -122,76 +122,6 @@
         ]
     },
     {
-        "id": "9968a559b69bbec1",
-        "type": "http in",
-        "z": "fac157c37af7bbd8",
-        "name": "",
-        "url": "/add",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 80,
-        "y": 200,
-        "wires": [
-            [
-                "ed5c6c0003c258cf"
-            ]
-        ]
-    },
-    {
-        "id": "c62bf2d5dc1eb90b",
-        "type": "http response",
-        "z": "fac157c37af7bbd8",
-        "name": "",
-        "statusCode": "302",
-        "headers": {
-            "location": "/"
-        },
-        "x": 600,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "56c7a8a175156a01",
-        "type": "function",
-        "z": "fac157c37af7bbd8",
-        "name": "db.todo.insert()",
-        "func": "const DB = global.get(\"DB\")\n\nlet todo = DB.todo\n\nconst now = new Date().getTime()\ntodo.push({\n    id: now,\n    name: msg.payload.name,\n    done: false,\n    stamp: {\n        createdAt: now,\n        ip: msg.req.ip,\n        username: \"\",\n        email: \"\"\n    }\n})\n\nDB.todo = todo\n\nglobal.set(\"DB\", DB)\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 420,
-        "y": 200,
-        "wires": [
-            [
-                "c62bf2d5dc1eb90b"
-            ]
-        ]
-    },
-    {
-        "id": "ed5c6c0003c258cf",
-        "type": "function",
-        "z": "fac157c37af7bbd8",
-        "name": "validation",
-        "func": "if (!msg.payload.name) {\n    node.error(\"Job information cannot be left blank\", msg);\n    return\n}\n\nreturn msg;",
-        "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 240,
-        "y": 200,
-        "wires": [
-            [
-                "56c7a8a175156a01"
-            ]
-        ]
-    },
-    {
         "id": "0ce6eb4db1883202",
         "type": "catch",
         "z": "fac157c37af7bbd8",
@@ -200,8 +130,8 @@
             "ed5c6c0003c258cf"
         ],
         "uncaught": false,
-        "x": 230,
-        "y": 240,
+        "x": 390,
+        "y": 40,
         "wires": [
             [
                 "98113fb783477472"
@@ -216,7 +146,14 @@
         "links": [
             "98113fb783477472",
             "d15c817ea51a7cc3",
-            "d88ad555a34772f0"
+            "d88ad555a34772f0",
+            "89a4d280e84549c5",
+            "0968daf3f3cac51c",
+            "0516b9d6e0b49de8",
+            "ab26a1200b90be7f",
+            "5650d1278b3660ba",
+            "5a4cbbb610e0faea",
+            "302ea22aa57f8a31"
         ],
         "x": 55,
         "y": 100,
@@ -236,47 +173,47 @@
             "802c3e2c251b7b7b",
             "78f547b172238567"
         ],
-        "x": 335,
-        "y": 240,
+        "x": 495,
+        "y": 40,
         "wires": []
     },
     {
-        "id": "71a144c874b45e6f",
+        "id": "85d4ef5f915b63ac",
         "type": "http in",
         "z": "fac157c37af7bbd8",
         "name": "",
-        "url": "/trash",
+        "url": "/opt/:type",
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 90,
-        "y": 320,
+        "x": 100,
+        "y": 240,
         "wires": [
             [
-                "9e67c874d0604878"
+                "7276004da5ac7026"
             ]
         ]
     },
     {
-        "id": "ea235cf525d30bfb",
+        "id": "3f2623a6532a7146",
         "type": "function",
         "z": "fac157c37af7bbd8",
-        "name": "db.todo.delete()",
-        "func": "const DB = global.get(\"DB\")\n\nlet todo = DB.todo\n\nconst index = todo.findIndex(x => x.id == msg.payload.id)\n\nif (!~index) {\n    msg.error = {\n        message : \"No record found matching id ...\"\n    }\n    return [null, msg]\n}\n\ntodo.splice(index, 1)\n\nDB.todo = todo\n\nglobal.set(\"DB\", DB)\n\nreturn msg;",
+        "name": "db.todo.opt()",
+        "func": "const DB = global.get(\"DB\")\n\nlet todo = DB.todo\n\nconst date = new Date()\nconst now = date.getTime()\n\nif (msg.req.params.type === \"add\") {\n    todo.push({\n        id: now,\n        name: msg.payload.name,\n        done: false,\n        stamp: {\n            createdAt: now,\n            ip: msg.req.ip,\n            username: \"\",\n            email: \"\"\n        },\n        date: date.toLocaleDateString(\"TR\"),\n        time: date.toLocaleTimeString(\"TR\")\n    })\n} else {\n    const index = todo.findIndex(x => x.id == msg.payload.id)\n\n    if (!~index) {\n        msg.error = {\n            message: \"No record found matching id ...\"\n        }\n        return [null, msg]\n    }\n\n    if (msg.req.params.type === \"update\" && todo[index].done  ) {\n        msg.error = {\n            message: \"Completed jobs cannot be updated ...\"\n        }\n        return [null, msg]\n    }\n\n    if (msg.req.params.type === \"trash\") {\n        todo.splice(index, 1)\n    } else {\n        switch (msg.req.params.type) {\n            case \"complete\":\n                todo[index].done = true\n                break;\n            case \"open\":\n                todo[index].done = false\n                break;\n            case \"update\":\n                todo[index].name=msg.payload.name\n                break;\n        }\n        todo[index].stamp = {\n            createdAt: now,\n            ip: msg.req.ip,\n            username: \"\",\n            email: \"\"\n        }\n        todo[index].date = date.toLocaleDateString(\"TR\")\n        todo[index].time = date.toLocaleTimeString(\"TR\")\n    }\n}\n\nDB.todo = todo\n\nglobal.set(\"DB\", DB)\n\nreturn msg;",
         "outputs": 2,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 440,
-        "y": 300,
+        "x": 450,
+        "y": 220,
         "wires": [
             [
-                "2e2ff0fdb5908073"
+                "0e9abaca3ac5b45f"
             ],
             [
-                "d88ad555a34772f0"
+                "5a4cbbb610e0faea"
             ]
         ],
         "outputLabels": [
@@ -285,25 +222,25 @@
         ]
     },
     {
-        "id": "9e67c874d0604878",
+        "id": "7276004da5ac7026",
         "type": "function",
         "z": "fac157c37af7bbd8",
         "name": "validation",
-        "func": "if (!msg.payload.id) {\n    msg.error = {\n        message: \"The element you want to delete must have ID information...\"\n    }\n    return [null, msg]\n}\n\nreturn msg;",
+        "func": "const typeLookup = {\n    trash: {\n        text: \"Trash\",\n        requireArgs: [\"id\"]\n    },\n    complete: {\n        text: \"Complete\",\n        requireArgs: [\"id\"]\n    },\n    open: {\n        text: \"Open\",\n        requireArgs: [\"id\"]\n    },\n    add: {\n        text: \"Add\",\n        requireArgs: [\"name\"]\n    },\n    update: {\n        text: \"Update\",\n        requireArgs: [\"id\", \"name\"]\n    }\n}\n\nif (!Object.keys(typeLookup).includes(msg.req.params.type)) {\n    msg.error = {\n        message: `${msg.req.params.type} a/an invalid parameter value...`\n    }\n    return [null, msg]\n}\n\nif (!typeLookup[msg.req.params.type].requireArgs.every(arg => msg.payload[arg])) {\n    msg.error = {\n        message: `${typeLookup[msg.req.params.type].text} The element you want must have ${typeLookup[msg.req.params.type].requireArgs} information...`\n    }\n    return [null, msg]\n}\n\nreturn msg;",
         "outputs": 2,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 260,
-        "y": 320,
+        "x": 280,
+        "y": 240,
         "wires": [
             [
-                "ea235cf525d30bfb"
+                "3f2623a6532a7146"
             ],
             [
-                "d15c817ea51a7cc3"
+                "5650d1278b3660ba"
             ]
         ],
         "outputLabels": [
@@ -312,7 +249,7 @@
         ]
     },
     {
-        "id": "2e2ff0fdb5908073",
+        "id": "0e9abaca3ac5b45f",
         "type": "http response",
         "z": "fac157c37af7bbd8",
         "name": "",
@@ -320,35 +257,123 @@
         "headers": {
             "location": "/"
         },
-        "x": 620,
-        "y": 280,
+        "x": 640,
+        "y": 200,
         "wires": []
     },
     {
-        "id": "d15c817ea51a7cc3",
+        "id": "5650d1278b3660ba",
         "type": "link out",
         "z": "fac157c37af7bbd8",
-        "name": "link out 2",
+        "name": "link out 8",
         "mode": "link",
         "links": [
             "802c3e2c251b7b7b",
             "78f547b172238567"
         ],
-        "x": 375,
+        "x": 405,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "5a4cbbb610e0faea",
+        "type": "link out",
+        "z": "fac157c37af7bbd8",
+        "name": "link out 9",
+        "mode": "link",
+        "links": [
+            "802c3e2c251b7b7b",
+            "78f547b172238567"
+        ],
+        "x": 595,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "6e505bf800db4947",
+        "type": "http in",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "url": "/edit/:id",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 90,
         "y": 340,
-        "wires": []
+        "wires": [
+            [
+                "3a4ae88e152738ca"
+            ]
+        ]
     },
     {
-        "id": "d88ad555a34772f0",
+        "id": "3a4ae88e152738ca",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "db.todo.findOne()",
+        "func": "const DB = global.get(\"DB\")\n\nmsg.payload = DB.todo.find(x => x.id == msg.req.params.id)\n\nif(!msg.payload){\n    msg.error = {\n        message: \"No record found matching id ...\"\n    }\n    return [null,msg]\n}\n\nif (msg.payload.done  ) {\n        msg.error = {\n            message: \"Completed jobs cannot be updated ...\"\n        }\n        return [null, msg]\n    }\n\nreturn msg;",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 340,
+        "wires": [
+            [
+                "f2dd2158d97bf7d2"
+            ],
+            [
+                "302ea22aa57f8a31"
+            ]
+        ],
+        "outputLabels": [
+            "Succ",
+            "Err"
+        ]
+    },
+    {
+        "id": "f2dd2158d97bf7d2",
+        "type": "template",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"tr\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, inital-scale=1.0\">\n    <title>Todo Web Application</title>\n    <link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\">\n    <link rel=\"stylesheet\" href=\"/font/bootstrap-icons.min.css\">\n</head>\n\n<body>\n    <div class=\"container mt-5\">\n        <div class=\"row\">\n            <div class=\"col-md-8 offset-md-2\">\n                {{#error}}\n                <div class=\"alert alert-danger\">\n                    <h4>{{message}}</h4>\n                </div>\n                {{/error}}\n                <form action=\"/opt/update\" method=\"POST\">\n                    <input type=\"hidden\" name=\"id\" value=\"{{payload.id}}\"/>\n                    <div class=\"mb-3\">\n                        <input required type=\"text\" name=\"name\" value=\"{{payload.name}}\" class=\"form-control form-control-lg {{#error}}border-danger{{/error}}{{^error}}border-info{{/error}}\" placeholder=\"Please enter the task you want to add to the list...\">\n                    </div>\n                    <div class=\"mb-3 float-end\">\n                        <a class=\"btn btn-warning\" href=\"/\">Cancel</a>\n                        <button class=\"btn btn-outline-secondary\" type=\"reset\">Clear</button>\n                        <button class=\"btn btn-success px-5\" type=\"submit\">Update</button>\n                    </div>\n                </form>\n            </div>\n        </div>\n    </div>\n    <script src=\"/js/bootstrap.bundle.min.js\"></script>\n    <script>\n        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\"tooltip\"]')\n        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))\n    </script>\n</body>\n\n</html>",
+        "output": "str",
+        "x": 480,
+        "y": 320,
+        "wires": [
+            [
+                "775308baf8af90e1"
+            ]
+        ]
+    },
+    {
+        "id": "302ea22aa57f8a31",
         "type": "link out",
         "z": "fac157c37af7bbd8",
-        "name": "link out 3",
+        "name": "link out 10",
         "mode": "link",
         "links": [
             "802c3e2c251b7b7b",
             "78f547b172238567"
         ],
-        "x": 575,
+        "x": 425,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "775308baf8af90e1",
+        "type": "http response",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 630,
         "y": 320,
         "wires": []
     }
