@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@buglss/node-red-crontinject": "~3.0.1",
     "node-red": "^3.1.9"
   }
 }
