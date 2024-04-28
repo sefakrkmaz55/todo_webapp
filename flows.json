@@ -44,7 +44,7 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "mustache",
-        "template": "<!DOCTYPE html>\n<html lang=\"tr\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, inital-scale=1.0\">\n    <title>Todo Web Application</title>\n    <link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\">\n    <link rel=\"stylesheet\" href=\"/font/bootstrap-icons.min.css\">\n</head>\n\n<body>\n    <div class=\"container mt-5\">\n        <div class=\"row\">\n            <div class=\"col-md-8 offset-md-2\">\n                {{#error}}\n                <div class=\"alert alert-danger\">\n                    <h4>{{message}}</h4>\n                </div>\n                {{/error}}\n                <form action=\"/opt/add\" method=\"POST\">\n                    <div class=\"input-group input-group-lg\">\n                        <input required type=\"text\" name=\"name\" class=\"form-control {{#error}}border-danger{{/error}}\" placeholder=\"Please enter the task you want to add to the list...\">\n                        <button class=\"btn btn-outline-secondary\" type=\"reset\">Clear</button>\n                        <button class=\"btn btn-primary px-5\" type=\"submit\">Add</button>\n                    </div>\n                </form>\n                <div class=\"card mt-2 overflow-hidden\">\n                    <div class=\"card-body p-0\">\n                        <div class=\"table-responsive\">\n                            <table class=\"table table-hover m-0\">\n                                <thead class=\"table-dark\">\n                                    <tr>\n                                        <th colspan=\"2\">Job</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    {{#payload}}\n                                    <tr valign=\"middle\">\n                                        <td>\n                                            {{#done}}\n                                            <h4 class=\"text-muted\"><del>{{name}}</del></h4>\n                                            {{/done}}\n                                            {{^done}}\n                                            <h4>{{name}}</h4>\n                                            {{/done}}\n                                            <div class=\"badge bg-secondary\">\n                                                <small><i class=\"bi bi-calendar\"></i> {{date}} {{time}}</small>\n                                            </div>\n                                        </td>\n                                        <td align=\"right\">\n                                            <div class=\"btn-grop\">\n                                                <form method=\"POST\">\n                                                    <input type=\"hidden\" name=\"id\" value=\"{{id}}\"/>\n                                                    {{#done}}\n                                                    <button data-bs-toggle=\"tooltip\" data-bs-title=\"Open Task\" type=\"submit\" formaction=\"/opt/open\" class=\"btn btn-warning\"><i class=\"bi bi-arrow-clockwise\"></i></button>\n                                                    {{/done}}\n                                                    {{^done}}\n                                                    <a data-bs-toggle=\"tooltip\" href=\"/edit/{{id}}\"\n                                                        data-bs-title=\"Edit Task\"\n                                                        class=\"btn btn-info\"><i class=\"bi bi-pencil-fill\"></i></a>\n                                                    <a data-bs-toggle=\"tooltip\" data-bs-title=\"Reminder Task\"\n                                                        href=\"/schedule/{{id}}\"\n                                                        class=\"btn btn-secondary\"><i class=\"bi bi-bell-fill\"></i></a>\n                                                    <button data-bs-toggle=\"tooltip\" data-bs-title=\"Complete Task\" type=\"submit\" formaction=\"/opt/complete\" class=\"btn btn-success\"><i class=\"bi bi-check-lg\"></i></button>\n                                                    {{/done}}\n                                                    <button data-bs-toggle=\"tooltip\" data-bs-title=\"Delete Task\" type=\"submit\" formaction=\"/opt/trash\" class=\"btn btn-danger\"><i class=\"bi bi-trash2-fill\"></i></button>\n                                                </form>\n                                            </div>\n                                        </td>\n                                    </tr>\n                                    {{/payload}}\n                                    {{^payload}}\n                                    <tr>\n                                        <td colspan=\"2\" class=\"text-muted text-center\">No job entries yet...</td>\n                                    </tr>\n                                    {{/payload}}\n                                </tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <script src=\"/js/bootstrap.bundle.min.js\"></script>\n    <script>\n        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\"tooltip\"]')\n        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))\n    </script>\n</body>\n\n</html>",
+        "template": "<!DOCTYPE html>\n<html lang=\"tr\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, inital-scale=1.0\">\n    <title>Todo Web Application</title>\n    <link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\">\n    <link rel=\"stylesheet\" href=\"/font/bootstrap-icons.min.css\">\n</head>\n\n<body>\n    <div class=\"container mt-5\">\n        <div class=\"row\">\n            <div class=\"col-md-8 offset-md-2\">\n                {{#error}}\n                <div class=\"alert alert-danger\">\n                    <h4>{{message}}</h4>\n                </div>\n                {{/error}}\n                <form action=\"/opt/add\" method=\"POST\">\n                    <div class=\"input-group input-group-lg\">\n                        <input required type=\"text\" name=\"name\" class=\"form-control {{#error}}border-danger{{/error}}\" placeholder=\"Please enter the task you want to add to the list...\">\n                        <button class=\"btn btn-outline-secondary\" type=\"reset\">Clear</button>\n                        <button class=\"btn btn-primary px-5\" type=\"submit\">Add</button>\n                    </div>\n                </form>\n                <div class=\"card mt-2 overflow-hidden\">\n                    <div class=\"card-body p-0\">\n                        <div class=\"table-responsive\">\n                            <table class=\"table table-hover m-0\">\n                                <thead class=\"table-dark\">\n                                    <tr>\n                                        <th colspan=\"2\">Job</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    {{#payload}}\n                                    <tr valign=\"middle\">\n                                        <td>\n                                            {{#done}}\n                                            <h4 class=\"text-muted\"><del>{{name}}</del></h4>\n                                            {{/done}}\n                                            {{^done}}\n                                            <h4>{{name}}</h4>\n                                            {{/done}}\n                                            <div class=\"badge bg-secondary\">\n                                                <small><i class=\"bi bi-calendar\"></i> {{date}} {{time}}</small>\n                                            </div>\n                                        </td>\n                                        <td align=\"right\">\n                                            <div class=\"btn-grop\">\n                                                <form method=\"POST\">\n                                                    <input type=\"hidden\" name=\"id\" value=\"{{id}}\"/>\n                                                    {{#done}}\n                                                    <button data-bs-toggle=\"tooltip\" data-bs-title=\"Open Task\" type=\"submit\" formaction=\"/opt/open\" class=\"btn btn-warning\"><i class=\"bi bi-arrow-clockwise\"></i></button>\n                                                    {{/done}}\n                                                    {{^done}}\n                                                    <a data-bs-toggle=\"tooltip\" href=\"/edit/{{id}}\"\n                                                        data-bs-title=\"Edit Task\"\n                                                        class=\"btn btn-info\"><i class=\"bi bi-pencil-fill\"></i></a>\n                                                    <a data-bs-toggle=\"tooltip\" data-bs-title=\"Reminder Task\"\n                                                        href=\"/schedule/{{id}}\"\n                                                        class=\"btn btn-secondary\"><i class=\"bi bi-bell-fill\"></i></a>\n                                                    <button data-bs-toggle=\"tooltip\" data-bs-title=\"Complete Task\" type=\"submit\" formaction=\"/opt/complete\" class=\"btn btn-success\"><i class=\"bi bi-check-lg\"></i></button>\n                                                    {{/done}}\n                                                    <button data-bs-toggle=\"tooltip\" data-bs-title=\"Delete Task\" type=\"submit\" formaction=\"/opt/trash\" class=\"btn btn-danger\"><i class=\"bi bi-trash2-fill\"></i></button>\n                                                </form>\n                                            </div>\n                                        </td>\n                                    </tr>\n                                    {{/payload}}\n                                    {{^payload}}\n                                    <tr>\n                                        <td colspan=\"2\" class=\"text-muted text-center\">No job entries yet...</td>\n                                    </tr>\n                                    {{/payload}}\n                                </tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <div class=\"position-relative\">\n        <a href=\"/user-list\" class=\"btn btn-danger btn-lg position-fixed bottom-0 end-0 m-5 shadow\"><i class=\"bi bi-person-fill\"></i></a>\n    </div>\n    <script src=\"/js/bootstrap.bundle.min.js\"></script>\n    <script>\n        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\"tooltip\"]')\n        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))\n    </script>\n</body>\n\n</html>",
         "output": "str",
         "x": 420,
         "y": 140,
@@ -59,11 +59,11 @@
         "type": "function",
         "z": "fac157c37af7bbd8",
         "name": "DB",
-        "func": "// Flush DB\nglobal.set(\"DB\", {\n    todo: []\n})",
+        "func": "// Flush DB\nglobal.set(\"DB\", {\n    todo: [],\n    user: []\n})",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
-        "initialize": "// Code added here will be run once\n// whenever the node is started.\n\nconst DB = global.get(\"DB\") || {\n    todo: []\n}\n\n/*\n * TODO DB Schema\n * id: NOW\n * name: \" \"\n * done: True|False\n * stamp: {\n *  createdAt: NOW\n *  ip: IP\n *  username: \" \"\n *  email: \" \"\n *  date: \"DD.MM.YYYY\"\n *  time: \"HH:MM\"\n * } \n**/\n\nglobal.set(\"DB\", DB)",
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\n\nconst DB = global.get(\"DB\") || {\n    todo: [],\n    user: []\n}\n\n/*\n * TODO DB Schema\n * id: NOW\n * name: \" \"\n * done: True|False\n * stamp: {\n *  createdAt: NOW\n *  ip: IP\n *  username: \" \"\n *  email: \" \"\n *  },\n *  schedule:{\n *   formData:{\n *      id:\"\",\n *      datetime: \"ISODate\",\n *   },\n *   options:{\n *      crontiMethod:\"onIntervalTime\",\n *      crontiArgs:\"[ISODate, ISODate]\",\n * }\n *  }\n *  date: \"DD.MM.YYYY\"\n *  time: \"HH:MM\"\n * } \n**/\n\n/*\n * USER DB Schema\n * id: NOW\n * displayName: \" \"\n * active: True|False\n * username: \" \"\n * password: \"HASH\"\n * stamp: {\n *  createdAt: NOW\n *  ip: IP\n *  username: \" \"\n *  email: \" \"\n *  },\n *  date: \"DD.MM.YYYY\"\n *  time: \"HH:MM\"\n * } \n**/\n\nglobal.set(\"DB\", DB)",
         "finalize": "",
         "libs": [],
         "x": 250,
@@ -154,7 +154,10 @@
             "5650d1278b3660ba",
             "5a4cbbb610e0faea",
             "302ea22aa57f8a31",
-            "9270a7b2489fd0f1"
+            "9270a7b2489fd0f1",
+            "20efafd4e65455b0",
+            "266fb064e26f30b6",
+            "d7e5864155934c36"
         ],
         "x": 55,
         "y": 100,
@@ -187,8 +190,8 @@
         "method": "post",
         "upload": false,
         "swaggerDoc": "",
-        "x": 80,
-        "y": 440,
+        "x": 100,
+        "y": 420,
         "wires": [
             [
                 "7276004da5ac7026"
@@ -200,15 +203,15 @@
         "type": "function",
         "z": "fac157c37af7bbd8",
         "name": "db.todo.opt()",
-        "func": "const DB = global.get(\"DB\")\n\nlet todo = DB.todo\n\nconst date = new Date()\nconst now = date.getTime()\n\nif (msg.req.params.type === \"add\") {\n    todo.push({\n        id: now,\n        name: msg.payload.name,\n        done: false,\n        stamp: {\n            createdAt: now,\n            ip: msg.req.ip,\n            username: \"\",\n            email: \"\"\n        },\n        date: date.toLocaleDateString(\"TR\"),\n        time: date.toLocaleTimeString(\"TR\")\n    })\n} else {\n    const index = todo.findIndex(x => x.id == msg.payload.id)\n\n    if (!~index) {\n        msg.error = {\n            message: \"No record found matching id ...\"\n        }\n        return [null, msg]\n    }\n\n    if (msg.req.params.type === \"update\" && todo[index].done) {\n        msg.error = {\n            message: \"Completed jobs cannot be updated ...\"\n        }\n        return [null, msg]\n    }\n\n    if (msg.req.params.type === \"trash\") {\n        todo.splice(index, 1)\n    } else if (msg.req.params.type === \"schedule\") {\n        //In-Memory Schedule\n        let scheduleOptions = {\n            \"crontiMethod\": \"onIntervalTime\",\n            \"crontiArgs\": [msg.payload.datetime, msg.payload.datetime]\n        }\n        todo[index].schedule = {\n            formData: msg.payload,\n            options:scheduleOptions\n        }\n        msg.payload = scheduleOptions\n    } else {\n        switch (msg.req.params.type) {\n            case \"complete\":\n                todo[index].done = true\n                break;\n            case \"open\":\n                todo[index].done = false\n                break;\n            case \"update\":\n                todo[index].name = msg.payload.name\n                break;\n        }\n        todo[index].stamp = {\n            createdAt: now,\n            ip: msg.req.ip,\n            username: \"\",\n            email: \"\"\n        }\n        todo[index].date = date.toLocaleDateString(\"TR\")\n        todo[index].time = date.toLocaleTimeString(\"TR\")\n    }\n}\n\nDB.todo = todo\n\nglobal.set(\"DB\", DB)\n\nreturn msg.req.params.type === \"schedule\" ? [msg, null, msg] : msg",
+        "func": "const DB = global.get(\"DB\")\n\nlet todo = DB.todo\n\nconst date = new Date()\nconst now = date.getTime()\n\nif (msg.req.params.type === \"add\") {\n    todo.push({\n        id: now,\n        name: msg.payload.name,\n        done: false,\n        stamp: {\n            createdAt: now,\n            ip: msg.req.ip,\n            username: \"\",\n            email: \"\"\n        },\n        date: date.toLocaleDateString(\"TR\"),\n        time: date.toLocaleTimeString(\"TR\")\n    })\n} else {\n    const index = todo.findIndex(x => x.id == msg.payload.id)\n\n    if (!~index) {\n        msg.error = {\n            message: \"No record found matching id ...\"\n        }\n        return [null, msg]\n    }\n\n    if (msg.req.params.type === \"update\" && todo[index].done) {\n        msg.error = {\n            message: \"Completed jobs cannot be updated ...\"\n        }\n        return [null, msg]\n    }\n\n    if (msg.req.params.type === \"trash\") {\n        todo.splice(index, 1)\n    } else if (msg.req.params.type === \"schedule\") {\n        //In-Memory Schedule\n        let scheduleOptions = {\n            \"crontiMethod\": \"onIntervalTime\",\n            \"crontiArgs\": [msg.payload.datetime, msg.payload.datetime]\n        }\n        todo[index].schedule = {\n            formData: msg.payload,\n            options:scheduleOptions\n        }\n        msg.payload = scheduleOptions\n        msg.todo=todo[index]\n    } else {\n        switch (msg.req.params.type) {\n            case \"complete\":\n                todo[index].done = true\n                break;\n            case \"open\":\n                todo[index].done = false\n                break;\n            case \"update\":\n                todo[index].name = msg.payload.name\n                break;\n        }\n        todo[index].stamp = {\n            createdAt: now,\n            ip: msg.req.ip,\n            username: \"\",\n            email: \"\"\n        }\n        todo[index].date = date.toLocaleDateString(\"TR\")\n        todo[index].time = date.toLocaleTimeString(\"TR\")\n    }\n}\n\nDB.todo = todo\n\nglobal.set(\"DB\", DB)\n\nreturn msg.req.params.type === \"schedule\" ? [msg, null, msg] : msg",
         "outputs": 3,
         "timeout": 0,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 430,
-        "y": 420,
+        "x": 450,
+        "y": 400,
         "wires": [
             [
                 "0e9abaca3ac5b45f"
@@ -238,8 +241,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 260,
-        "y": 440,
+        "x": 280,
+        "y": 420,
         "wires": [
             [
                 "3f2623a6532a7146"
@@ -262,8 +265,8 @@
         "headers": {
             "location": "/"
         },
-        "x": 600,
-        "y": 380,
+        "x": 620,
+        "y": 360,
         "wires": []
     },
     {
@@ -276,8 +279,8 @@
             "802c3e2c251b7b7b",
             "78f547b172238567"
         ],
-        "x": 385,
-        "y": 460,
+        "x": 405,
+        "y": 440,
         "wires": []
     },
     {
@@ -290,8 +293,8 @@
             "802c3e2c251b7b7b",
             "78f547b172238567"
         ],
-        "x": 555,
-        "y": 420,
+        "x": 575,
+        "y": 400,
         "wires": []
     },
     {
@@ -394,6 +397,11 @@
             {
                 "p": "topic",
                 "vt": "str"
+            },
+            {
+                "p": "todo",
+                "v": "todo",
+                "vt": "msg"
             }
         ],
         "repeat": "",
@@ -407,23 +415,13 @@
         "crontiArgs": "[]",
         "inputs": 1,
         "hasButton": false,
-        "x": 600,
-        "y": 460,
+        "x": 620,
+        "y": 440,
         "wires": [
             [
-                "988c4b4989c4c5c8"
+                "9812fca182336205"
             ]
         ]
-    },
-    {
-        "id": "8bfc7514b094d06e",
-        "type": "comment",
-        "z": "fac157c37af7bbd8",
-        "name": "eposta gönder",
-        "info": "",
-        "x": 840,
-        "y": 460,
-        "wires": []
     },
     {
         "id": "ba90e2b70ef045e8",
@@ -514,21 +512,60 @@
         "wires": []
     },
     {
-        "id": "988c4b4989c4c5c8",
-        "type": "debug",
+        "id": "07bd82b5923bd1bf",
+        "type": "e-mail",
         "z": "fac157c37af7bbd8",
-        "name": "debug 1",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "true",
-        "targetType": "full",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 740,
-        "y": 420,
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "",
+        "dname": "",
+        "x": 1070,
+        "y": 440,
         "wires": []
+    },
+    {
+        "id": "9812fca182336205",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "header",
+        "func": "msg.from = \"noreply <noreply@todo.com>\"\nmsg.to = \"sefakjk4017@gmail.com\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 440,
+        "wires": [
+            [
+                "d178fe4fbbaa8ee8"
+            ]
+        ]
+    },
+    {
+        "id": "d178fe4fbbaa8ee8",
+        "type": "template",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "<p>Hello {{todo.stamp.displayName}},</p>\n<p></p>\nWe would like to remind you about your {{todo.name}} job :)\n<p></p>\n",
+        "output": "str",
+        "x": 920,
+        "y": 440,
+        "wires": [
+            [
+                "07bd82b5923bd1bf"
+            ]
+        ]
     },
     {
         "id": "ac1147e8c95ed5cc",
@@ -549,45 +586,14 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "x": 620,
+        "payload": "DB.todo",
+        "payloadType": "global",
+        "x": 680,
         "y": 40,
         "wires": [
             [
                 "31d0ed2508870846"
             ]
-        ]
-    },
-    {
-        "id": "5a37eef50fae52b3",
-        "type": "crontinject",
-        "z": "fac157c37af7bbd8",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "",
-        "payload": "DB.todo",
-        "payloadType": "global",
-        "crontiMethod": "",
-        "crontiArgs": "[]",
-        "inputs": 1,
-        "hasButton": false,
-        "x": 960,
-        "y": 40,
-        "wires": [
-            []
         ]
     },
     {
@@ -602,12 +608,345 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
+        "x": 860,
         "y": 40,
         "wires": [
             [
-                "5a37eef50fae52b3"
+                "b16eb570cb42c653"
             ]
         ]
+    },
+    {
+        "id": "b82564ec27c9dc4f",
+        "type": "link in",
+        "z": "fac157c37af7bbd8",
+        "name": "link in 2",
+        "links": [
+            "b16eb570cb42c653"
+        ],
+        "x": 505,
+        "y": 460,
+        "wires": [
+            [
+                "e2025b2d18aa7805"
+            ]
+        ]
+    },
+    {
+        "id": "b16eb570cb42c653",
+        "type": "link out",
+        "z": "fac157c37af7bbd8",
+        "name": "link out 12",
+        "mode": "link",
+        "links": [
+            "b82564ec27c9dc4f",
+            "f1a4a49cadc9e790"
+        ],
+        "x": 975,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "21260a4398e3870f",
+        "type": "http in",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "url": "/user-list",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 90,
+        "y": 520,
+        "wires": [
+            [
+                "dd47c0a09e739589"
+            ]
+        ]
+    },
+    {
+        "id": "5be984fb2cbc763d",
+        "type": "http response",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 590,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "c8327a54a38bcd10",
+        "type": "template",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"tr\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, inital-scale=1.0\">\n    <title>User List</title>\n    <link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\">\n    <link rel=\"stylesheet\" href=\"/font/bootstrap-icons.min.css\">\n</head>\n\n<body>\n    <div class=\"container mt-5\">\n        <div class=\"row\">\n            <div class=\"col-md-8 offset-md-2\">\n                {{#error}}\n                <div class=\"alert alert-danger\">\n                    <h4>{{message}}</h4>\n                </div>\n                {{/error}}\n                <form action=\"/user-opt/add\" method=\"POST\">\n                    <div class=\"input-group input-group-lg\">\n                        <input required type=\"text\" name=\"username\" value=\"{{error.formData.username}}\" class=\"form-control {{#error}}border-danger{{/error}}\" placeholder=\"Please enter the username...\">\n                        <input required type=\"password\" name=\"password\" value=\"{{error.formData.password}}\" class=\"form-control {{#error}}border-danger{{/error}}\" placeholder=\"Please enter the password...\">\n                        <button class=\"btn btn-outline-secondary\" type=\"reset\">Clear</button>\n                        <button class=\"btn btn-primary px-5\" type=\"submit\">Add</button>\n                    </div>\n                </form>\n                <div class=\"card mt-2 overflow-hidden\">\n                    <div class=\"card-body p-0\">\n                        <div class=\"table-responsive\">\n                            <table class=\"table table-hover m-0\">\n                                <thead class=\"table-dark\">\n                                    <tr>\n                                        <th colspan=\"2\">Username</th>\n                                        <th>Status</th>\n                                    </tr>\n                                </thead>\n                                <tbody>\n                                    {{#payload}}\n                                    <tr valign=\"middle\">\n                                        <td>\n                                            {{#active}}\n                                            <h4>{{username}}</h4>\n                                            {{/active}}\n                                            {{^active}}\n                                            <h4 class=\"text-muted\"><del>{{username}}</del></h4>\n                                            {{/active}}\n                                            <div class=\"badge bg-secondary\">\n                                                <small><i class=\"bi bi-calendar\"></i> {{date}} {{time}}</small>\n                                            </div>\n                                        </td>\n                                        <td align=\"right\">\n                                            <div class=\"btn-grop\">\n                                                <a data-bs-toggle=\"tooltip\" href=\"/user-edit/{{id}}\"\n                                                    data-bs-title=\"Edit User Info\"\n                                                    class=\"btn btn-info\"><i class=\"bi bi-pencil-fill\"></i></a>\n                                            </div>\n                                        </td>\n                                    </tr>\n                                    {{/payload}}\n                                    {{^payload}}\n                                    <tr>\n                                        <td colspan=\"2\" class=\"text-muted text-center\">No users recognized yet ...</td>\n                                    </tr>\n                                    {{/payload}}\n                                </tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n    <div class=\"position-relative\">\n        <a href=\"/\"\n            class=\"btn btn-warning btn-lg position-fixed bottom-0 end-0 m-5 shadow\"><i class=\"bi bi-card-checklist\"></i></a>\n    </div>\n    <script src=\"/js/bootstrap.bundle.min.js\"></script>\n    <script>\n        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\"tooltip\"]')\n        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))\n    </script>\n</body>\n\n</html>",
+        "output": "str",
+        "x": 440,
+        "y": 520,
+        "wires": [
+            [
+                "5be984fb2cbc763d"
+            ]
+        ]
+    },
+    {
+        "id": "dd47c0a09e739589",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "db.user.find()",
+        "func": "const DB = global.get(\"DB\")\n\nmsg.payload = DB.user?.sort((a, b) => b.stamp.createdAt - a.stamp.createdAt)\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 520,
+        "wires": [
+            [
+                "c8327a54a38bcd10"
+            ]
+        ]
+    },
+    {
+        "id": "26f561af42e8cfb1",
+        "type": "http in",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "url": "/user-opt/:type",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 620,
+        "wires": [
+            [
+                "d9f103b2527a7e56"
+            ]
+        ]
+    },
+    {
+        "id": "a475f7f1a3bc1103",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "db.user.opt()",
+        "func": "const DB = global.get(\"DB\")\n\nlet user = DB.user\n\nconst date = new Date()\nconst now = date.getTime()\n\nif (msg.req.params.type === \"add\") {\n    user.push({\n        id: now,\n        active: true,\n        stamp: {\n            createdAt: now,\n            ip: msg.req.ip,\n            username: \"\",\n            email: \"\"\n        },\n        date: date.toLocaleDateString(\"TR\"),\n        time: date.toLocaleTimeString(\"TR\"),\n        ...msg.payload\n    })\n} else {\n    const index = user.findIndex(x => x.id == msg.payload.id)\n\n    if (!~index) {\n        msg.error = {\n            message: \"No record found matching id ...\",\n            formData: msg.payload\n        }\n        return [null, msg]\n    }\n\n    user[index] = { ...user[index], ...msg.payload }\n    user[index].stamp = {\n        createdAt: now,\n        ip: msg.req.ip,\n        username: \"\",\n        email: \"\"\n    }\n    user[index].date = date.toLocaleDateString(\"TR\")\n    user[index].time = date.toLocaleTimeString(\"TR\")\n}\n\n\nDB.user = user\n\nglobal.set(\"DB\", DB)\n\nreturn msg",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 630,
+        "y": 600,
+        "wires": [
+            [
+                "5f0481d07aafa921"
+            ],
+            [
+                "43e54c419027600d"
+            ]
+        ],
+        "outputLabels": [
+            "Succ",
+            "Err"
+        ]
+    },
+    {
+        "id": "d9f103b2527a7e56",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "validation",
+        "func": "const typeLookup = {\n    add: {\n        text: \"Add\",\n        requireArgs: [\"username\", \"password\"]\n    },\n    update: {\n        text: \"Update\",\n        requireArgs: [\"id\", \"username\", \"password\"]\n    }\n}\n\nif (!Object.keys(typeLookup).includes(msg.req.params.type)) {\n    msg.error = {\n        message: `${msg.req.params.type} a/an invalid parameter value...`,\n        formData: msg.payload\n    }\n    return [null, msg]\n}\n\nif (!typeLookup[msg.req.params.type].requireArgs.every(arg => msg.payload[arg])) {\n    msg.error = {\n        message: `${typeLookup[msg.req.params.type].text} The element you want must have ${typeLookup[msg.req.params.type].requireArgs} information...`,\n        formData: msg.payload\n    }\n    return [null, msg]\n}\n\nreturn msg;",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 620,
+        "wires": [
+            [
+                "583682c5e3bc7e8d"
+            ],
+            [
+                "04a1242f1b1511a8"
+            ]
+        ],
+        "outputLabels": [
+            "Valid",
+            "Invalid"
+        ]
+    },
+    {
+        "id": "5f0481d07aafa921",
+        "type": "http response",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "statusCode": "302",
+        "headers": {
+            "location": "/user-list"
+        },
+        "x": 800,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "0a8b5d2533106ff0",
+        "type": "link in",
+        "z": "fac157c37af7bbd8",
+        "name": "link in 3",
+        "links": [
+            "04a1242f1b1511a8",
+            "43e54c419027600d",
+            "07a090b0292d028c"
+        ],
+        "x": 145,
+        "y": 480,
+        "wires": [
+            [
+                "dd47c0a09e739589"
+            ]
+        ]
+    },
+    {
+        "id": "04a1242f1b1511a8",
+        "type": "link out",
+        "z": "fac157c37af7bbd8",
+        "name": "link out 13",
+        "mode": "link",
+        "links": [
+            "0a8b5d2533106ff0"
+        ],
+        "x": 435,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "43e54c419027600d",
+        "type": "link out",
+        "z": "fac157c37af7bbd8",
+        "name": "link out 14",
+        "mode": "link",
+        "links": [
+            "0a8b5d2533106ff0"
+        ],
+        "x": 755,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "583682c5e3bc7e8d",
+        "type": "bcrypt",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "action": "encrypt",
+        "field": "payload.password",
+        "hash": "payload",
+        "target": "payload.password",
+        "assignment": "assign",
+        "match": "match",
+        "outputs": 1,
+        "rounds": 10,
+        "x": 470,
+        "y": 600,
+        "wires": [
+            [
+                "a475f7f1a3bc1103"
+            ]
+        ]
+    },
+    {
+        "id": "e3ed92d0d3745718",
+        "type": "http in",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "url": "/user-edit/:id",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 720,
+        "wires": [
+            [
+                "f0382ee617fbb015"
+            ]
+        ]
+    },
+    {
+        "id": "f0382ee617fbb015",
+        "type": "function",
+        "z": "fac157c37af7bbd8",
+        "name": "db.user.findOne()",
+        "func": "const DB = global.get(\"DB\")\n\nmsg.payload = DB.user.find(x => x.id == msg.req.params.id)\n\nif(!msg.payload){\n    msg.error = {\n        message: \"No record found matching id ...\"\n    }\n    return [null,msg]\n}\n\nif (msg.payload.done  ) {\n        msg.error = {\n            message: \"Completed jobs cannot be updated ...\"\n        }\n        return [null, msg]\n    }\n\nreturn msg;",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 720,
+        "wires": [
+            [
+                "f36a537305b01f7d"
+            ],
+            [
+                "07a090b0292d028c"
+            ]
+        ],
+        "outputLabels": [
+            "Succ",
+            "Err"
+        ]
+    },
+    {
+        "id": "f36a537305b01f7d",
+        "type": "template",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<!DOCTYPE html>\n<html lang=\"tr\">\n\n<head>\n    <meta charset=\"UTF-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, inital-scale=1.0\">\n    <title>User list</title>\n    <link rel=\"stylesheet\" href=\"/css/bootstrap.min.css\">\n    <link rel=\"stylesheet\" href=\"/font/bootstrap-icons.min.css\">\n</head>\n\n<body>\n    <div class=\"container mt-5\">\n        <div class=\"row\">\n            <div class=\"col-md-8 offset-md-2\">\n                {{#error}}\n                <div class=\"alert alert-danger\">\n                    <h4>{{message}}</h4>\n                </div>\n                {{/error}}\n                <form action=\"/user-opt/update\" method=\"POST\">\n                    <input type=\"hidden\" name=\"id\" value=\"{{payload.id}}\"/>\n                    <div class=\"mb-3\">\n                        <label for=\"username\" class=\"form-label\">Username</label>\n                        <input readonly type=\"text\" name=\"username\" value=\"{{payload.username}}\" class=\"form-control form-control-lg {{#error}}border-danger{{/error}}{{^error}}border-info{{/error}}\" placeholder=\"Username...\">\n                    </div>\n                    <div class=\"mb-3\">\n                        <label for=\"displayName\" class=\"form-label\">Name-Surname</label>\n                        <input required type=\"text\" name=\"displayName\" value=\"{{payload.displayName}}\" class=\"form-control form-control-lg {{#error}}border-danger{{/error}}{{^error}}border-info{{/error}}\" placeholder=\"Name Surname...\">\n                    </div>\n                    <div class=\"mb-3\">\n                        <label for=\"password\" class=\"form-label\">Password</label>\n                        <input required type=\"password\" name=\"password\" class=\"form-control form-control-lg {{#error}}border-danger{{/error}}{{^error}}border-info{{/error}}\" placeholder=\"Password...\">\n                    </div>\n                    <div class=\"mb-3\">\n                        <div class=\"form-check\">\n                            <input class=\"form-check-input\" type=\"radio\" name=\"status\" id=\"status\">\n                            <label class=\"form-check-label\" for=\"status\" value=\"true\">Active</label>\n                        </div>\n                        <div class=\"form-check\">\n                            <input class=\"form-check-input\" type=\"radio\" name=\"status\" id=\"status\">\n                            <label class=\"form-check-label\" for=\"status\" value=\"false\">Passive</label>\n                        </div>\n                    </div>\n                    <div class=\"mb-3 float-end\">\n                        <a class=\"btn btn-warning\" href=\"/user-list\">Cancel</a>\n                        <button class=\"btn btn-outline-secondary\" type=\"reset\">Clear</button>\n                        <button class=\"btn btn-success px-5\" type=\"submit\">Update</button>\n                    </div>\n                </form>\n            </div>\n        </div>\n    </div>\n    <script src=\"/js/bootstrap.bundle.min.js\"></script>\n    <script>\n        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle=\"tooltip\"]')\n        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))\n    </script>\n</body>\n\n</html>",
+        "output": "str",
+        "x": 520,
+        "y": 700,
+        "wires": [
+            [
+                "3449b46a30fb90ae"
+            ]
+        ]
+    },
+    {
+        "id": "3449b46a30fb90ae",
+        "type": "http response",
+        "z": "fac157c37af7bbd8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 670,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "07a090b0292d028c",
+        "type": "link out",
+        "z": "fac157c37af7bbd8",
+        "name": "link out 15",
+        "mode": "link",
+        "links": [
+            "0a8b5d2533106ff0"
+        ],
+        "x": 475,
+        "y": 740,
+        "wires": []
     }
 ]
